@@ -30,6 +30,8 @@ module network(clk,reset,input_spike,output_spike);
     
     reg [CONST_SIZE-1:0] thresholds [NEURON_NUM-1:0];
     reg [CONST_SIZE-1:0] leaks [NEURON_NUM-1:0];
+    
+    reg [3:0] refractory_periods [NEURON_NUM-1:0];
     //reg [7:0] weights [NEURON_NUM-1:0][DATA_SIZE-1:0];
     
     //4(neuron_num) separate 32(data_size*8)bit registers.
@@ -44,7 +46,8 @@ module network(clk,reset,input_spike,output_spike);
             neuron_inst (
                         .clk(clk),.reset(reset),.threshold(thresholds[i]),.leak(leaks[i]),
                         .input_spike(input_spike),.output_spike(output_spike[i]),
-                        .weights_flat(weights_flat[i]));
+                        .weights_flat(weights_flat[i]),
+                        .refractory_period(refractory_periods[i]));
         end
     endgenerate
 endmodule
