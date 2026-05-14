@@ -20,13 +20,15 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module lif_neuron #(parameter DATA_SIZE = 4)
-            (input_spike,weights_flat,clk,reset,threshold,leak,output_spike);
+module lif_neuron #(parameter DATA_SIZE = 4, CONST_SIZE = 8) //default, can be overridden
+            (input_spike,weights_flat,clk,reset,threshold,leak,output_spike,
+            refractory_period);
 
     input [DATA_SIZE-1:0] input_spike;
     input [(DATA_SIZE*8)-1:0] weights_flat; //32 bit array each time
     input clk,reset;
-    input [15:0] threshold,leak;
+    input [CONST_SIZE-1:0] threshold,leak;
+    input [3:0] refractory_period; // 0 to 7 clock cycles sufficient
     
     output reg output_spike;
     
